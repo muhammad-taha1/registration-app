@@ -1,0 +1,107 @@
+<style>
+  .margin-top-navbar{
+      margin-top:30px;
+  }
+  .margin-top-navbar-large{
+      margin-top:80px;
+  }
+  @media (min-width: 1200px) {
+  .container{
+      margin-left: 0;
+  }
+}
+
+/* .input-field {
+    width: 50% !important;
+  } */
+</style>
+<html>
+  <head>
+    {% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+    <title>{{config.event_name}} Registration</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+             <div class="container">
+               <div class="navbar-header">
+                 <a class="navbar-brand" href="/user-registration/">{{config.event_name}} Registration</a>
+               </div>
+             </div>
+          </nav>
+      </div>
+
+      <div class="container margin-top-navbar-large">
+        <p><label>Event:</label> {{config.event_name}}</p>
+        <p><label>Starts at:</label> {{config.start_date_time}}</p>
+        <p><label>Ends at:</label> {{config.end_date_time}}</p>
+      </div>
+      <hr>
+      <form class="container" method="post" action="{% url 'index' %}">
+        <div class="form-group">
+           <label>Name:</label>
+           {% if form.name.errors %}
+           <div class="alert alert-danger">
+            <strong>{{ form.name.errors|escape }}</strong>
+          </div>
+          {% endif %}
+           
+           <input name="name" type="text" class="form-control input-field">
+        </div>
+        <div class="form-group">
+          <label>Soeid:</label>
+          {% if form.soeid.errors %}
+          <div class="alert alert-danger">
+            <strong>{{ form.soeid.errors|escape }}</strong>
+          </div>
+          {% endif %}
+          <input name="soeid" type="text" class="form-control input-field">
+        </div>
+        <div class="form-group">
+          <label>Email:</label>
+          {% if form.email.errors %}
+          <div class="alert alert-danger">
+            <strong>{{ form.email.errors|escape }}</strong>
+          </div>
+          {% endif %}
+          <input name="email" type="email" class="form-control input-field">
+        </div>
+        <div class="form-group">
+          <label>Role:</label>
+          {% if form.role.errors %}
+          <div class="alert alert-danger">
+            <strong>{{ form.role.errors|escape }}</strong>
+          </div>
+          {% endif %}
+          <select name="role" class="form-control">
+            <option disabled selected value> -- select an option -- </option>
+            {% for role_opts in roles %}
+            <option>{{ role_opts.short_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary pull-right">Register</button>
+        </div>
+    </form>
+
+    {% if success %}
+    <div class="alert alert-success">
+      <strong>{{ success|escape }}</strong>
+    </div>
+    {% endif %}
+
+    {% if warn %}
+    <div class="alert alert-warning">
+      <strong>{{ warn|escape }}</strong>
+    </div>
+    {% endif %}
+
+  </body>
+</html>
+
+
+
